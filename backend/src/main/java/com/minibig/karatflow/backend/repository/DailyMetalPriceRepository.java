@@ -1,0 +1,17 @@
+package com.minibig.karatflow.backend.repository;
+
+import com.minibig.karatflow.backend.domain.DailyMetalPrice;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.time.LocalDate;
+import java.util.Optional;
+
+public interface DailyMetalPriceRepository extends JpaRepository<DailyMetalPrice, Long> {
+    Optional<DailyMetalPrice> findByPriceDateAndMetalType(LocalDate date, String metalType);
+    Optional<DailyMetalPrice> findFirstByMetalTypeOrderByPriceDateDesc(String metalType);
+    Optional<DailyMetalPrice> findFirstByMetalTypeOrderByPriceDateAsc(String metalType);
+    Optional<DailyMetalPrice> findFirstByMetalTypeAndPriceDateLessThanOrderByPriceDateDesc(String metalType, LocalDate priceDate);
+    java.util.List<DailyMetalPrice> findTop7ByMetalTypeOrderByPriceDateDesc(String metalType);
+    java.util.List<DailyMetalPrice> findTop90ByMetalTypeOrderByPriceDateDesc(String metalType);
+    java.util.List<DailyMetalPrice> findAllByMetalTypeOrderByPriceDateAsc(String metalType);
+    void deleteByPriceDateGreaterThanEqual(LocalDate priceDate);
+}

@@ -1,0 +1,70 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:YOUR_GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET:YOUR_GOOGLE_CLIENT_SECRET}
+            scope: profile, email
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID:YOUR_KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET:YOUR_KAKAO_CLIENT_SECRET}
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            redirect-uri: "${KAKAO_REDIRECT_URI:{baseUrl}/login/oauth2/code/{registrationId}}"
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+  datasource:
+    url: jdbc:h2:file:./karatflow;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;AUTO_SERVER=TRUE
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  sql:
+    init:
+      mode: never
+  jpa:
+    defer-datasource-initialization: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    show-sql: false
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+    url: jdbc:h2:mem:karatflow;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    user: sa
+    password: 
+
+server:
+  port: 8888
+  error:
+    include-message: always
+    include-stacktrace: always
+
+logging:
+  level:
+    org.springframework.security: TRACE
+
+krx:
+  api:
+    key: ${KRX_API_KEY:ADC20ED6167F4FB3878CCD2008E4E53733BA8876}
+
+app:
+  frontend-url: ${APP_FRONTEND_URL:http://localhost:5555}
+  cors:
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5555,http://127.0.0.1:5555}
+
+

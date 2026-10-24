@@ -1,0 +1,199 @@
+/* Global Styles for PrimeReact & KaratFlow APM */
+@import "primeicons/primeicons.css";
+@import "primereact/resources/themes/lara-light-indigo/theme.css";
+
+/* TabView styling for Gold Tools Modal */
+.custom-gold-tabs .p-tabview-nav {
+  background: #f8fafc !important;
+  border-bottom: 2px solid #e2e8f0 !important;
+  display: flex !important;
+  gap: 8px !important;
+  padding: 6px 8px 0 8px !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.custom-gold-tabs .p-tabview-nav li {
+  margin-right: 0 !important;
+}
+
+.custom-gold-tabs .p-tabview-nav li .p-tabview-nav-link {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-bottom: none !important;
+  border-radius: 8px 8px 0 0 !important;
+  padding: 10px 20px !important;
+  font-weight: 700 !important;
+  color: #475569 !important;
+  transition: all 0.2s ease-in-out !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+
+.custom-gold-tabs .p-tabview-nav li:not(.p-highlight) .p-tabview-nav-link:hover {
+  background: #f1f5f9 !important;
+  color: #1e293b !important;
+}
+
+.custom-gold-tabs .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+}
+
+.custom-gold-tabs .p-tabview-nav li.p-highlight .p-tabview-nav-link * {
+  color: #ffffff !important;
+}
+
+.custom-gold-tabs .p-tabview-panels {
+  padding: 1.25rem 0 0 0 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Screen Styles for Print Views */
+@media screen {
+  .print-mode-label, .print-mode-invoice {
+    display: none !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  /* Hide main UI, dialog masks, toasts, backdrops */
+  .no-print, .p-toast, .p-dialog, .p-dialog-mask, .p-component-overlay, .p-dialog-wrapper {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  
+  .print-mode-label, .print-mode-invoice {
+    display: block !important;
+    visibility: visible !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    z-index: 999999 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  /* Reset page constraints */
+  body, #root {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* 50x30 Thermal Label Mode */
+  .print-mode-label {
+    width: 50mm;
+    height: 30mm;
+    page-break-after: always;
+    padding: 2mm;
+    box-sizing: border-box;
+    font-size: 9pt;
+    line-height: 1.2;
+    overflow: hidden;
+    font-family: sans-serif;
+  }
+  
+  .print-mode-label h1 {
+    font-size: 11pt;
+    margin: 0 0 1mm 0;
+    font-weight: 700;
+  }
+  
+  .print-mode-label .engraving-highlight {
+    font-weight: 700;
+    font-size: 9pt;
+    border: 1px solid #000;
+    padding: 1mm;
+    margin-top: 1mm;
+    text-align: center;
+  }
+
+  /* A4 Invoice Mode */
+  .print-mode-invoice {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm;
+    box-sizing: border-box;
+    font-size: 11pt;
+    font-family: sans-serif;
+  }
+  
+  .print-mode-invoice h1 {
+    text-align: center;
+    font-size: 20pt;
+    margin-bottom: 8mm;
+    border-bottom: 2px solid #000;
+    padding-bottom: 4mm;
+  }
+  
+  .print-mode-invoice table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6mm;
+  }
+  
+  .print-mode-invoice th, .print-mode-invoice td {
+    border: 1px solid #000;
+    padding: 6px 8px;
+    text-align: left;
+  }
+}
+
+.hold-pulse-row > td {
+    animation: holdPulse 1.5s ease-in-out infinite;
+    background-color: rgba(239, 68, 68, 0.08) !important;
+}
+@keyframes holdPulse {
+    0%, 100% { background-color: rgba(239, 68, 68, 0.08); }
+    50% { background-color: rgba(239, 68, 68, 0.18); }
+}
+
+.unread-live-event-card {
+    animation: liveEventBlinkPulse 1.5s ease-in-out infinite !important;
+    cursor: pointer;
+}
+
+@keyframes liveEventBlinkPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.6), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.25), 0 8px 15px -1px rgba(59, 130, 246, 0.3);
+        transform: scale(1.02);
+    }
+}
+
+/* Pipeline Template Dropdown alignment & vertical centering */
+.pipeline-template-dropdown {
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.pipeline-template-dropdown .p-dropdown-label {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: normal !important;
+    height: 100% !important;
+}
+
+.pipeline-template-dropdown .p-dropdown-trigger {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+}
