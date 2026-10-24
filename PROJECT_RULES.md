@@ -45,4 +45,24 @@
 3. **Zero Human Intervention for Debugging**:
    - 문법 에러, 타입 오류, 런타임 예외, 테스트 실패 발생 시 사용자에게 되묻지 않고 에이전트가 직접 터미널 로그를 분석하여 `Exit Code 0`이 될 때까지 자가 치유 루프를 지속한다.
 4. **Continuous Git Checkpointing**:
-   - 검증이 완료된 원자적 태스크 단위마다 즉시 의미 있는 커밋 메시지와 함께 로컬 Git 커밋을 생성하여 언제든 안전한 롤백 지점을 확보한다.
+   - 검증이 완료된 원자적 태스크 단위마다 즉시 의미 있는 커밋 메시지와 함께 로컬 Git 커밋 및 원격 저장소 Push를 수행하여 언제든 안전한 롤백 지점을 확보한다.
+
+---
+
+## 4. KaratFlow 도메인 절대 준수 규칙 (Non-Negotiable Domain Invariants)
+
+1. **대시보드 시세 데이터 (KRX D-1 & 순서 고정)**:
+   - 외부 임시 시세(Yahoo 등) 사용을 금지하며 한국거래소(KRX) API 기반 DB 캐싱 및 휴일/주말 직전 거래일 종가 이월(Carry-Forward) 로직을 준수한다.
+   - 대시보드 사이드바 시세 카드는 반드시 **`[금]` ➡️ `[석유]` ➡️ `[코스피]`** 순서로 고정 렌더링한다.
+2. **주문(`Order`) - 물건(`WorkOrder`) 1:N 분리 및 상태/공정 독립**:
+   - `Order.status`는 오직 `PROCESSING`, `COMPLETED`, `CANCELLED` 3개 표준 ENUM만 허용한다.
+   - 물리적 공정(`currentStage`, `order.stage`)과 수명주기 상태(`order.status`)를 절대 혼용하지 않으며, 완료 시에도 `order.stage`를 `"완료"`로 덮어쓰지 않고 템플릿의 실제 마지막 공정명(예: `출고`)을 유지한다.
+   - 커스텀 공정 템플릿의 단계명(`stageName`)을 최우선 처리하며 기본값(`접수`)으로 무단 롤백되는 현상을 차단한다.
+3. **제품 후보(Candidates) 매핑 및 이미지 경량화**:
+   - 주문 생성 시 등록 제품(AutoComplete) 및 미등록 제품(`unmappedBrandName`, `unmappedProductName`) 모두 지원하고, 미매핑 제품은 후보 리스트(Candidates)에서 승인(Confirm) 및 매핑(Map) 가능해야 한다.
+   - 주문 이미지 업로드 시 클라이언트 브라우저에서 `1024px`, `82%` 품질로 압축 후 전송한다.
+4. **필수 자동화 검증 게이트**:
+   - 백엔드 변경 시: `./gradlew compileJava` 및 `./gradlew test` (`BUILD SUCCESSFUL`)
+   - 프론트엔드 변경 시: `npm run build` (`0 Error`, Vite 번들링 통과)
+   - PowerShell 스크립트(`.ps1`) 작성 시 한글 깨짐 방지를 위해 반드시 **UTF-8 with BOM** 인코딩을 적용한다.
+
